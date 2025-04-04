@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌈 The Fun Facts About You 🌈</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom right, #ffdee9, #b5fffc);
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 30px;
+      font-size: 3em;
+      color: #6a0dad;
+      text-shadow: 1px 1px 5px #fff;
+    }
+
+    .sparkles {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+      animation: twinkle 3s infinite;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    input, button {
+      padding: 12px 20px;
+      font-size: 1.2em;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    input {
+      width: 250px;
+      box-shadow: 0 0 10px #6a0dad;
+    }
+
+    button {
+      background-color: #6a0dad;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff8af2;
+    }
+
+    #fortune {
+      font-size: 1.5em;
+      margin-top: 30px;
+      color: #2f004f;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    #fortune.show {
+      opacity: 1;
+    }
+
+    audio {
+      display: none;
+    }
+
+    .fortune-name {
+      font-size: 1.2em;
+      margin-top: 10px;
+      color: #ff69b4;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sparkles"></div>
+
+  <h1>🔮 Discover Your Silly Facts 🔮</h1>
+
+  <input type="text" id="username" placeholder="Enter your name..." />
+  <button onclick="revealFortune()">Reveal My Future</button>
+
+  <div id="fortune"></div>
+  <div class="fortune-name" id="funName"></div>
+
+  <audio id="bgmusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/14/audio_40eb63197e.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+const predictions = [
+  "Someone can’t stop thinking about you right now. 👀",
+  "Your smile is about to cause a small traffic jam. 😌",
+  "You’ll walk into a room and steal all the attention. Effortlessly. 🔥",
+  "A secret admirer might just slide into your DMs. Stay ready. 😉",
+  "You’re giving main character energy today. Don’t hold back. 💃",
+  "Your crush is low-key stalking your profile. Don’t change a thing. 📱",
+  "You’ll say something today that makes someone blush. 🌶️",
+  "Someone’s heartbeat will speed up when they see you. ❤️‍🔥",
+  "You’re dangerously close to being everyone’s favorite distraction. 😎",
+  "That ‘accidental’ selfie you take? Yeah, it's going to break hearts. 📸",
+  "A random compliment will make you smile harder than you expect. 💫",
+  "You’ll leave a mark without even trying. Smooth. ✨",
+  "Your vibe today: filmy, flirty, fabulous. 💋",
+  "Someone will dream about you tonight. No kidding. 🌙",
+  "You're not looking for attention... but it's definitely looking for you. 🔥"
+];
+
+
+    const funNames = [
+  "Samosa Samurai 🥟",
+  "Raja of Rasgullas 👑",
+  "Queen of Chai Nation ☕",
+  "Bollywood Dreamer 🎬",
+  "Dosa Dancer 💃",
+  "Biryani Boss 🍲",
+  "Ninja of Naps 🛌",
+  "Masala Magician 🌶️",
+  "Auto Rickshaw Rider 🚖",
+  "Tandoori Trendsetter 🔥",
+  "Filter Coffee Philosopher 🧘",
+  "Street Food Star 🌯",
+  "Momos Mastermind 🥡",
+  "Lassi Lover 🥤",
+  "Desi Vibe Distributor 💫",
+  "Kurta Crusader 🧥",
+  "Jugaad Genius 🧠",
+  "Mango Mood Maker 🥭",
+  "Dramatic Like a Daily Soap 🎭",
+  "Gully Cricket Legend 🏏"
+];
+
+
+    function revealFortune() {
+      const name = document.getElementById('username').value.trim();
+      const fortuneDiv = document.getElementById('fortune');
+      const funNameDiv = document.getElementById('funName');
+
+      if (!name) {
+        fortuneDiv.textContent = "Please enter your name to reveal your destiny!";
+        funNameDiv.textContent = "";
+        fortuneDiv.classList.add('show');
+        speak("Please enter your name to reveal your destiny!");
+        return;
+      }
+
+      const prediction = predictions[Math.floor(Math.random() * predictions.length)];
+      const funName = funNames[Math.floor(Math.random() * funNames.length)];
+
+      const message = `${name}, ${prediction}`;
+      fortuneDiv.textContent = message;
+      funNameDiv.textContent = `✨ Your Fortune Name: ${funName} ✨`;
+
+      fortuneDiv.classList.remove('show');
+      void fortuneDiv.offsetWidth;
+      fortuneDiv.classList.add('show');
+
+      speak(message);
+    }
+
+    function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.pitch = 1.1;
+      utter.rate = 1;
+      speechSynthesis.speak(utter);
+    }
+  </script>
+
+</body>
+</html>
